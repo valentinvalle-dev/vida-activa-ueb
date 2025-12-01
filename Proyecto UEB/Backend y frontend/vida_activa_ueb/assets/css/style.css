@@ -1,0 +1,1453 @@
+/* =========================================
+   VARIABLES GLOBALES DEL SITIO
+   ========================================= */
+:root {
+    --color-primario-oscuro: #003366; /* Azul oscuro (para títulos, botones) */
+    --color-primario-claro: #f0f5f9;  /* Un azul muy pálido (para fondos de tarjetas) */
+    --color-acento: #D32F2F;          /* Rojo UEB (para botones de 'Crear' o 'Eliminar') */
+    
+    --color-texto-principal: #333333;   /* Texto normal */
+    --color-texto-secundario: #555555; /* Texto más claro (descripciones) */
+    --color-fondo: #f4f7f6;
+    --color-blanco: #FFFFFF;
+    --color-borde: #DDDDDD;
+
+    --fuente-principal: 'Arial', 'Helvetica', sans-serif;
+    --sombra-tarjeta: 0 2px 5px rgba(0,0,0,0.1);
+    --borde-radio: 8px;
+}
+
+/* =========================================
+   ESTILOS GENERALES Y LAYOUT
+   ========================================= */
+body {
+    font-family: var(--fuente-principal);
+    background-color: var(--color-fondo);
+    color: var(--color-texto-principal);
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-primario-oscuro);
+}
+a:hover {
+    color: var(--color-acento);
+}
+
+/* --- ESTILOS DEL LAYOUT --- */
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Barra lateral de navegación (Sidebar) */
+.sidebar {
+    width: 250px;
+    background-color: var(--color-blanco);
+    padding: 1.5rem;
+    box-shadow: var(--sombra-tarjeta);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.sidebar h3 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    color: var(--color-primario-oscuro);
+    font-size: 1.5rem;
+}
+
+.sidebar .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar .menu li a {
+    display: block;
+    padding: 0.8rem 1rem;
+    border-radius: var(--borde-radio);
+    margin-bottom: 0.5rem;
+    transition: background-color 0.3s, color 0.3s;
+    font-weight: bold;
+    color: var(--color-texto-secundario);
+}
+
+.sidebar .menu li a:hover {
+    background-color: var(--color-primario-claro);
+    color: var(--color-primario-oscuro);
+}
+
+/* Área de contenido principal */
+.main-content {
+    flex-grow: 1; 
+    padding: 2rem;
+    margin-left: 250px; 
+}
+
+/* =========================================
+   ESTILOS DE AUTENTICACIÓN (LOGIN/REGISTRO)
+   ========================================= */
+
+/* Logo flotante en la esquina - MEJORADO */
+.corner-logo {
+    position: absolute; 
+    top: 2rem;
+    left: 2rem;
+    z-index: 10;
+    animation: fadeInLeft 0.8s ease;
+}
+
+.corner-logo img {
+    width: 275px;
+    height: 275px;
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+    transition: transform 0.3s ease;
+}
+
+.corner-logo img:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Contenedor que centra el formulario - MEJORADO */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, var(--color-primario-claro) 100%);
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto de círculos decorativos en el fondo */
+.auth-container::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0, 51, 102, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    top: -250px;
+    right: -250px;
+    animation: float 6s ease-in-out infinite;
+}
+
+.auth-container::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(211, 47, 47, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    bottom: -200px;
+    left: -200px;
+    animation: float 8s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Título "Vida Activa UEB" DENTRO del formulario - MEJORADO */
+.auth-form-title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--color-primario-claro);
+}
+
+.auth-form-title h2 {
+    color: var(--color-primario-oscuro);
+    margin: 0;
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* La tarjeta/formulario blanco - MEJORADO */
+.auth-form {
+    background-color: var(--color-blanco);
+    padding: 3rem 3.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 51, 102, 0.15);
+    border: 1px solid var(--color-borde);
+    width: 100%;
+    max-width: 480px;
+    position: relative;
+    z-index: 5;
+    animation: fadeInUp 0.8s ease;
+}
+
+/* Barra decorativa superior del formulario */
+.auth-form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--color-primario-oscuro), var(--color-acento));
+    border-radius: 12px 12px 0 0;
+}
+
+.auth-form h1 {
+    color: var(--color-primario-oscuro);
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.auth-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: var(--color-texto-principal);
+    font-size: 0.95rem;
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"] {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border: 2px solid var(--color-borde);
+    border-radius: var(--borde-radio);
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #fafafa;
+}
+
+.auth-form input[type="text"]:focus,
+.auth-form input[type="email"]:focus,
+.auth-form input[type="password"]:focus {
+    outline: none;
+    border-color: var(--color-primario-oscuro);
+    background-color: var(--color-blanco);
+    box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+    transform: translateY(-2px);
+}
+
+.auth-form button {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: var(--borde-radio);
+    background: linear-gradient(135deg, var(--color-primario-oscuro), #004080);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 51, 102, 0.3);
+    margin-top: 1rem;
+}
+
+.auth-form button:hover {
+    background: linear-gradient(135deg, var(--color-acento), #B71C1C);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
+}
+
+.auth-form button:active {
+    transform: translateY(-1px);
+}
+
+/* Estilo para los enlaces de "¿Ya tienes cuenta?" */
+.auth-form p {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--color-texto-secundario);
+}
+
+.auth-form p a {
+    color: var(--color-primario-oscuro);
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.auth-form p a:hover {
+    color: var(--color-acento);
+    text-decoration: underline;
+}
+
+/* =========================================
+   ESTILOS PÁGINA DE RUTINAS (TARJETAS)
+   ========================================= */
+
+/* Título principal de la página */
+.main-content h1 {
+    color: var(--color-primario-oscuro);
+    border-bottom: 3px solid var(--color-primario-oscuro);
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+/* Subtítulos de secciones */
+.main-content h2 {
+    color: var(--color-texto-principal);
+    font-size: 1.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+    padding-left: 0.5rem;
+    border-left: 4px solid var(--color-acento);
+}
+
+/* Contenedor para la cuadrícula de tarjetas */
+.rutinas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* La tarjeta individual - MEJORADA PARA SPRINT 3 */
+.rutina-card {
+    background-color: var(--color-blanco);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--borde-radio);
+    box-shadow: var(--sombra-tarjeta);
+    overflow: hidden; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.rutina-card:hover {
+    transform: translateY(-8px); 
+    box-shadow: 0 8px 20px rgba(0, 51, 102, 0.2);
+}
+
+/* Barra de color superior en cada tarjeta */
+.rutina-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-primario-oscuro), var(--color-acento));
+}
+
+/* Contenido de la tarjeta */
+.card-content {
+    padding: 1.5rem;
+}
+
+.card-content h3 {
+    color: var(--color-primario-oscuro);
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.4rem;
+    line-height: 1.3;
+}
+
+.card-content p {
+    color: var(--color-texto-secundario);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* Estilo para el botón de "Crear Nueva Rutina" - MEJORADO PARA SPRINT 3 */
+.btn-crear-rutina {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--color-acento), #B71C1C);
+    color: white;
+    border: none;
+    border-radius: var(--borde-radio);
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
+    text-decoration: none;
+}
+
+.btn-crear-rutina:hover {
+    background: linear-gradient(135deg, #B71C1C, var(--color-acento));
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(211, 47, 47, 0.4);
+    color: white;
+}
+
+.btn-crear-rutina::before {
+    content: '+ ';
+    font-size: 1.3rem;
+    margin-right: 0.3rem;
+}
+
+/* =========================================
+   ESTILOS DE FORMULARIOS (CREAR RUTINA)
+   ========================================= */
+
+.form-crear {
+    background-color: var(--color-blanco);
+    padding: 2rem;
+    border-radius: var(--borde-radio);
+    box-shadow: var(--sombra-tarjeta);
+    max-width: 700px;
+    margin-top: 2rem;
+    border: 1px solid var(--color-borde);
+}
+
+.form-crear h2 {
+    color: var(--color-primario-oscuro);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    border-left: none;
+    padding-left: 0;
+}
+
+.form-crear label {
+    display: block;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+    font-weight: bold;
+    color: var(--color-texto-principal);
+}
+
+.form-crear input[type="text"],
+.form-crear textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-borde);
+    border-radius: var(--borde-radio);
+    box-sizing: border-box;
+    font-family: var(--fuente-principal);
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-crear input[type="text"]:focus,
+.form-crear textarea:focus {
+    outline: none;
+    border-color: var(--color-primario-oscuro);
+}
+
+.form-crear textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Selector de ejercicios */
+.selector-ejercicio {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: var(--color-primario-claro);
+    border-radius: var(--borde-radio);
+    border: 1px solid var(--color-borde);
+}
+
+.selector-ejercicio h3 {
+    color: var(--color-primario-oscuro);
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.selector-ejercicio select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-borde);
+    border-radius: var(--borde-radio);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.ejercicio-item {
+    background-color: var(--color-blanco);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: var(--borde-radio);
+    border: 1px solid var(--color-borde);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ejercicio-item-info {
+    flex-grow: 1;
+}
+
+.ejercicio-item input {
+    width: 80px;
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+    border: 1px solid var(--color-borde);
+    border-radius: var(--borde-radio);
+}
+
+.btn-quitar {
+    background-color: var(--color-acento);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--borde-radio);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-quitar:hover {
+    background-color: #B71C1C;
+}
+
+.btn-agregar-ejercicio {
+    background-color: var(--color-primario-oscuro);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--borde-radio);
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-agregar-ejercicio:hover {
+    background-color: #002147;
+}
+
+/* Botones del formulario */
+.form-crear button[type="submit"] {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--color-primario-oscuro);
+    color: white;
+    border: none;
+    border-radius: var(--borde-radio);
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 2rem;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.form-crear button[type="submit"]:hover {
+    background-color: var(--color-acento);
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   MENSAJES Y ALERTAS
+   ========================================= */
+
+.alerta {
+    padding: 1rem;
+    border-radius: var(--borde-radio);
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+}
+
+.alerta-exito {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alerta-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+    
+    .main-content {
+        margin-left: 200px;
+        padding: 1.5rem;
+    }
+    
+    .rutinas-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+    
+    .layout {
+        flex-direction: column;
+    }
+}
+/* =========================================
+   ESTILOS DEL CALENDARIO
+   ========================================= */
+
+/* Navegación del calendario */
+.calendario-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0;
+    padding: 1rem;
+    background-color: var(--color-blanco);
+    border-radius: var(--borde-radio);
+    box-shadow: var(--sombra-tarjeta);
+}
+
+.mes-actual {
+    margin: 0;
+    color: var(--color-primario-oscuro);
+    font-size: 1.8rem;
+}
+
+.btn-nav-calendario {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--color-primario-oscuro);
+    color: white;
+    border-radius: var(--borde-radio);
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-nav-calendario:hover {
+    background-color: var(--color-acento);
+    transform: translateY(-2px);
+    color: white;
+}
+
+/* Botón agregar rutina */
+.btn-agregar-rutina {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--color-acento), #B71C1C);
+    color: white;
+    border: none;
+    border-radius: var(--borde-radio);
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 1rem 0;
+    box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-agregar-rutina:hover {
+    background: linear-gradient(135deg, #B71C1C, var(--color-acento));
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(211, 47, 47, 0.4);
+}
+
+/* Contenedor del calendario */
+.calendario-container {
+    background-color: var(--color-blanco);
+    padding: 2rem;
+    border-radius: var(--borde-radio);
+    box-shadow: var(--sombra-tarjeta);
+    margin-top: 1.5rem;
+}
+
+/* Grid del calendario */
+.calendario-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+}
+
+/* Encabezados de días de la semana */
+.dia-semana {
+    text-align: center;
+    font-weight: bold;
+    color: var(--color-primario-oscuro);
+    padding: 1rem;
+    background-color: var(--color-primario-claro);
+    border-radius: var(--borde-radio);
+}
+
+/* Días vacíos (antes del primer día del mes) */
+.dia-vacio {
+    background-color: #f9f9f9;
+    min-height: 100px;
+    border-radius: var(--borde-radio);
+}
+
+/* Días del mes */
+.dia-mes {
+    min-height: 120px;
+    padding: 0.5rem;
+    background-color: var(--color-blanco);
+    border: 2px solid var(--color-borde);
+    border-radius: var(--borde-radio);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.dia-mes:hover {
+    border-color: var(--color-primario-oscuro);
+    box-shadow: 0 4px 10px rgba(0, 51, 102, 0.1);
+}
+
+/* Número del día */
+.numero-dia {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--color-texto-principal);
+    margin-bottom: 0.5rem;
+}
+
+/* Día actual (hoy) */
+.dia-hoy {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border-color: var(--color-primario-oscuro);
+    border-width: 3px;
+}
+
+.dia-hoy .numero-dia {
+    color: var(--color-primario-oscuro);
+    font-size: 1.4rem;
+}
+
+/* Día con rutinas planificadas */
+.dia-con-rutina {
+    background-color: #fff8e1;
+}
+
+/* Rutinas dentro del día */
+.rutinas-del-dia {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.rutina-item-calendario {
+    background-color: var(--color-blanco);
+    padding: 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 3px solid var(--color-primario-oscuro);
+    transition: all 0.2s ease;
+}
+
+.rutina-item-calendario:hover {
+    transform: translateX(3px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.rutina-pendiente {
+    border-left-color: var(--color-acento);
+    background-color: #ffebee;
+}
+
+.rutina-completada {
+    border-left-color: #4caf50;
+    background-color: #e8f5e9;
+    opacity: 0.8;
+}
+
+.icono-estado {
+    font-weight: bold;
+    margin-right: 0.3rem;
+    font-size: 1rem;
+}
+
+.nombre-rutina-cal {
+    flex-grow: 1;
+    font-weight: 500;
+    color: var(--color-texto-principal);
+}
+
+/* Acciones dentro de la rutina */
+.acciones-rutina {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.btn-completar,
+.btn-eliminar-mini {
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-completar {
+    background-color: #4caf50;
+    color: white;
+}
+
+.btn-completar:hover {
+    background-color: #388e3c;
+}
+
+.btn-eliminar-mini {
+    background-color: var(--color-acento);
+    color: white;
+}
+
+.btn-eliminar-mini:hover {
+    background-color: #B71C1C;
+}
+
+/* Leyenda del calendario */
+.calendario-leyenda {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: var(--color-primario-claro);
+    border-radius: var(--borde-radio);
+    flex-wrap: wrap;
+}
+
+.leyenda-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.leyenda-color {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    border: 2px solid var(--color-borde);
+}
+
+.leyenda-hoy {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border-color: var(--color-primario-oscuro);
+}
+
+.leyenda-con-rutina {
+    background-color: #fff8e1;
+}
+
+/* =========================================
+   MODAL PARA AGREGAR RUTINA
+   ========================================= */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-contenido {
+    background-color: var(--color-blanco);
+    margin: 5% auto;
+    padding: 2.5rem;
+    border-radius: var(--borde-radio);
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.cerrar-modal {
+    position: absolute;
+    right: 1.5rem;
+    top: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--color-texto-secundario);
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.cerrar-modal:hover {
+    color: var(--color-acento);
+}
+
+.modal-contenido h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--color-primario-oscuro);
+    border-left: none;
+    padding-left: 0;
+}
+
+.modal-contenido label {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: var(--color-texto-principal);
+}
+
+.modal-contenido input,
+.modal-contenido select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--color-borde);
+    border-radius: var(--borde-radio);
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.modal-contenido input:focus,
+.modal-contenido select:focus {
+    outline: none;
+    border-color: var(--color-primario-oscuro);
+}
+
+.btn-guardar-modal {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    background: linear-gradient(135deg, var(--color-primario-oscuro), #004080);
+    color: white;
+    border: none;
+    border-radius: var(--borde-radio);
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-guardar-modal:hover {
+    background: linear-gradient(135deg, var(--color-acento), #B71C1C);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4);
+}
+
+/* =========================================
+   RESPONSIVE PARA CALENDARIO
+   ========================================= */
+
+@media (max-width: 768px) {
+    .calendario-grid {
+        gap: 0.3rem;
+    }
+    
+    .dia-mes {
+        min-height: 80px;
+        padding: 0.3rem;
+    }
+    
+    .numero-dia {
+        font-size: 1rem;
+    }
+    
+    .rutina-item-calendario {
+        font-size: 0.75rem;
+        padding: 0.3rem;
+    }
+    
+    .calendario-nav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+/* =========================================
+   BOTONES DE ACCIÓN EN TARJETAS
+   ========================================= */
+
+.card-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-card {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border-radius: var(--borde-radio);
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.btn-ver {
+    background-color: var(--color-primario-oscuro);
+    color: white;
+}
+
+.btn-ver:hover {
+    background-color: #002147;
+    transform: translateY(-2px);
+    color: white;
+}
+
+.btn-planificar {
+    background-color: #4caf50;
+    color: white;
+}
+
+.btn-planificar:hover {
+    background-color: #388e3c;
+    transform: translateY(-2px);
+    color: white;
+}
+
+.btn-eliminar {
+    background-color: var(--color-acento);
+    color: white;
+}
+
+.btn-eliminar:hover {
+    background-color: #B71C1C;
+    transform: translateY(-2px);
+    color: white;
+}
+/* =========================================
+   ESTILOS DEL DASHBOARD
+   ========================================= */
+
+.dashboard-subtitle {
+    color: var(--color-texto-secundario);
+    font-size: 1.1rem;
+    margin-top: -1rem;
+    margin-bottom: 2rem;
+}
+
+/* Tarjetas de Estadísticas */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background-color: var(--color-blanco);
+    padding: 2rem;
+    border-radius: var(--borde-radio);
+    box-shadow: var(--sombra-tarjeta);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: transform 0.3s ease;
+    border-left: 5px solid;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card-blue {
+    border-left-color: var(--color-primario-oscuro);
+}
+
+.stat-card-yellow {
+    border-left-color: #ff9800;
+}
+
+.stat-card-green {
+    border-left-color: #4caf50;
+}
+
+.stat-icon {
+    font-size: 3rem;
+}
+
+.stat-info h3 {
+    font-size: 2.5rem;
+    margin: 0;
+    color: var(--color-primario-oscuro);
+}
+
+.stat-info p {
+    margin: 0;
+    color: var(--color-texto-secundario);
+    font-size: 1rem;
+}
+
+/* Próxima Rutina */
+.proxima-rutina {
+    margin-bottom: 3rem;
+}
+
+.proxima-rutina h2 {
+    margin-bottom: 1rem;
+}
+
+.proxima-rutina-card {
+    background-color: var(--color-blanco);
+    padding: 2rem;
+    border-radius: var(--borde-radio);
+    box-shadow: var(--sombra-tarjeta);
+    border-left: 5px solid var(--color-acento);
+}
+
+.proxima-info h3 {
+    color: var(--color-primario-oscuro);
+    margin-top: 0;
+}
+
+.fecha-proxima {
+    font-weight: bold;
+    color: var(--color-acento);
+    font-size: 1.1rem;
+}
+
+.proxima-acciones {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.btn-completar-dashboard,
+.btn-ver-calendario {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--borde-radio);
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-completar-dashboard {
+    background-color: #4caf50;
+    color: white;
+}
+
+.btn-completar-dashboard:hover {
+    background-color: #388e3c;
+    color: white;
+}
+
+.btn-ver-calendario {
+    background-color: var(--color-primario-oscuro);
+    color: white;
+}
+
+.btn-ver-calendario:hover {
+    background-color: var(--color-acento);
+    color: white;
+}
+
+/* Sin rutinas */
+.sin-rutinas {
+    background-color: var(--color-primario-claro);
+    padding: 3rem;
+    border-radius: var(--borde-radio);
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.btn-ir-calendario {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: var(--color-primario-oscuro);
+    color: white;
+    border-radius: var(--borde-radio);
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-ir-calendario:hover {
+    background-color: var(--color-acento);
+    transform: translateY(-2px);
+    color: white;
+}
+
+/* Accesos Rápidos */
+.accesos-rapidos h2 {
+    margin-bottom: 1rem;
+}
+
+.accesos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.acceso-card {
+    background-color: var(--color-blanco);
+    padding: 2rem;
+    border-radius: var(--borde-radio);
+    box-shadow: var(--sombra-tarjeta);
+    text-align: center;
+    text-decoration: none;
+    color: var(--color-texto-principal);
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.acceso-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 51, 102, 0.2);
+    color: var(--color-primario-oscuro);
+}
+
+.acceso-icon {
+    font-size: 2.5rem;
+}
+/* =========================================
+   ESTILOS DETALLE DE RUTINA
+   ========================================= */
+
+.detalle-header {
+    margin-bottom: 2rem;
+}
+
+.btn-volver {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--color-primario-oscuro);
+    color: white;
+    border-radius: var(--borde-radio);
+    font-weight: bold;
+    text-decoration: none;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-volver:hover {
+    background-color: var(--color-acento);
+    transform: translateX(-5px);
+    color: white;
+}
+
+.detalle-rutina {
+    background-color: var(--color-blanco);
+    padding: 2rem;
+    border-radius: var(--borde-radio);
+    box-shadow: var(--sombra-tarjeta);
+}
+
+.info-rutina-box {
+    padding: 1.5rem;
+    background-color: var(--color-primario-claro);
+    border-radius: var(--borde-radio);
+    margin-bottom: 2rem;
+}
+
+.info-rutina-box h2 {
+    margin-top: 0;
+    color: var(--color-primario-oscuro);
+    border-left: none;
+    padding-left: 0;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.badge-personal {
+    background-color: #ff9800;
+    color: white;
+}
+
+.badge-sistema {
+    background-color: var(--color-primario-oscuro);
+    color: white;
+}
+
+/* Ejercicios en el detalle */
+.ejercicios-detalle h2 {
+    margin-bottom: 1.5rem;
+    color: var(--color-primario-oscuro);
+    border-left: none;
+    padding-left: 0;
+}
+
+.ejercicios-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.ejercicio-detalle-card {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background-color: var(--color-blanco);
+    border: 2px solid var(--color-borde);
+    border-radius: var(--borde-radio);
+    transition: all 0.3s ease;
+}
+
+.ejercicio-detalle-card:hover {
+    border-color: var(--color-primario-oscuro);
+    box-shadow: 0 4px 10px rgba(0, 51, 102, 0.1);
+}
+
+.ejercicio-numero {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--color-primario-oscuro), #004080);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.ejercicio-info {
+    flex-grow: 1;
+}
+
+.ejercicio-info h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: var(--color-primario-oscuro);
+}
+
+.ejercicio-desc {
+    color: var(--color-texto-secundario);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.ejercicio-stats {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    padding: 0.5rem 1rem;
+    background-color: var(--color-primario-claro);
+    border-radius: var(--borde-radio);
+    font-size: 0.9rem;
+}
+
+.stat-item strong {
+    color: var(--color-primario-oscuro);
+}
+
+.sin-ejercicios {
+    text-align: center;
+    padding: 2rem;
+    color: var(--color-texto-secundario);
+    background-color: var(--color-primario-claro);
+    border-radius: var(--borde-radio);
+}
+
+/* Acciones del detalle */
+.acciones-detalle {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--color-borde);
+}
+
+.btn-accion {
+    flex: 1;
+    padding: 1rem;
+    border-radius: var(--borde-radio);
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-planificar-detalle {
+    background-color: #4caf50;
+    color: white;
+}
+
+.btn-planificar-detalle:hover {
+    background-color: #388e3c;
+    transform: translateY(-2px);
+    color: white;
+}
+
+.btn-ver-todas {
+    background-color: var(--color-primario-oscuro);
+    color: white;
+}
+
+.btn-ver-todas:hover {
+    background-color: var(--color-acento);
+    transform: translateY(-2px);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .acciones-detalle {
+        flex-direction: column;
+    }
+}
